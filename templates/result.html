@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processed Image</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #ffcc00; /* Yellow color for headers */
+        }
+        img {
+            height: 270px;
+            width: 1000px;
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+            border: 2px solid #ffcc00; /* Yellow border for the image */
+            border-radius: 10px; /* Rounded corners for the image */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Box shadow for a subtle lift */
+        }
+        pre {
+            background-color: #333; /* Dark gray background for predictions */
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto; /* Add horizontal scroll for long predictions */
+        }
+    </style>
+</head>
+<body>
+    <h1>Processed Image</h1>
+    <img src="{{ url_for('processed_image_file') }}" alt="Processed Image">
+    
+    <h2>Predictions</h2>
+    <pre id="predictionContainer">{{ predictions }}</pre>
+
+    <script>
+        // Split predictions into lines if the number of letters exceeds 50
+        document.addEventListener("DOMContentLoaded", function() {
+            var predictionContainer = document.getElementById("predictionContainer");
+            var predictions = predictionContainer.innerText;
+            var maxLength = 101;
+            var result = '';
+
+            for (var i = 0; i < predictions.length; i += maxLength) {
+                result += predictions.substr(i, maxLength) + '\n';
+            }
+
+            predictionContainer.innerText = result;
+        });
+    </script>
+</body>
+</html>
